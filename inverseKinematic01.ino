@@ -28,39 +28,23 @@ void pos(float posX, float posY, float posZ) {
   posX += 0.00001;
   posY += 0.00001;
   posZ += 0.00001;
-  // Takes magnitudes of positions and outputs direction of vector
+  
   float rotatorAngle = atan(posX / posZ) / (6.28318530718) * 360;
-  // Calibrates for position of servo in the arm
   rotator.write(-rotatorAngle + 90);
 
-  // Magnitude of the distance away the point is
   float dist = sqrt(pow(posX, 2) + pow(posY, 2) + pow(posZ, 2));
-  // Magnitude along the XZ plane
   float distXZ = sqrt(pow(posX, 2) + pow(posZ, 2));
-
-  // Angle orthogonal to the line that connects the point to the origin
   float orthRad = atan(distXZ / posY);
-  // Distance the elbow is away from the midpoint of the line that connects the
-  // point to the origin
   float orthDist = sqrt(pow(8, 2) - pow(dist / 2, 2));
 
-  // Shoulder XZ component
   float shoulderXZ = distXZ / 2 - orthDist * cos(orthRad);
-  // Shoulder Y component
   float shoulderY = posY / 2 + orthDist * sin(orthRad);
-
-  // Shoulder angle
   float shoulderAngle = (atan(shoulderXZ / shoulderY) / 6.28318530718) * 360;
-  // Calibrates for position of servo in the arm
   shoulder.write(shoulderAngle + 50);
 
-  // Distance shoulder is from the hand from the XZ direction
   float elbowDistXZ = distXZ - shoulderXZ;
-  // Distance shoulder is from the hand from the Y direction
   float elbowDistY = posY - shoulderY;
-  // Elbow Angle from difference in position
   float elbowAngle = atan(elbowDistY / elbowDistXZ) / (6.28318530718) * 360;
-  // Calibrates for position of servo in the arm
   elbow.write(elbowAngle + 90);
 }
 
