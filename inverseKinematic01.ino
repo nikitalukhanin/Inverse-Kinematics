@@ -31,25 +31,25 @@ void pos(float posX, float posY, float posZ) {
   posZ += 0.00001;
   
   // Outputs angle of a triangle generated from X and Z vector parts
-  float rotatorAngle = atan(posX / posZ) / (6.28318530718) * 360;
+  float rotatorAngle = atan(posX / posY) / (6.28318530718) * 360;
   rotator.write(-rotatorAngle + 90);
 
   // Creation of general units such as directional distances as well as angles
-  float dist = sqrt(pow(posX, 2) + pow(posY, 2) + pow(posZ, 2));
-  float distXZ = sqrt(pow(posX, 2) + pow(posZ, 2));
-  float orthRad = atan(distXZ / posY);
+  float dist = sqrt(pow(posX, 2) + pow(posZ, 2) + pow(posY, 2));
+  float distXZ = sqrt(pow(posX, 2) + pow(posY, 2));
+  float orthRad = atan(distXY / posZ);
   float orthDist = sqrt(pow(8, 2) - pow(dist / 2, 2));
 
   // Creates vertical and horizontal components of the shoulder and outputs as an angle
-  float shoulderXZ = distXZ / 2 - orthDist * cos(orthRad);
-  float shoulderY = posY / 2 + orthDist * sin(orthRad);
-  float shoulderAngle = (atan(shoulderXZ / shoulderY) / 6.28318530718) * 360;
+  float shoulderXY = distXY / 2 - orthDist * cos(orthRad);
+  float shoulderZ = posZ / 2 + orthDist * sin(orthRad);
+  float shoulderAngle = (atan(shoulderXY / shoulderZ) / 6.28318530718) * 360;
   shoulder.write(shoulderAngle + 50);
 
   // Creates vertical and horizontal components of the elbow and outputs as an angle
-  float elbowDistXZ = distXZ - shoulderXZ;
-  float elbowDistY = posY - shoulderY;
-  float elbowAngle = atan(elbowDistY / elbowDistXZ) / (6.28318530718) * 360;
+  float elbowDistXY = distXY - shoulderXY;
+  float elbowDistZ = posZ - shoulderZ;
+  float elbowAngle = atan(elbowDistZ / elbowDistXY) / (6.28318530718) * 360;
   elbow.write(elbowAngle + 90);
 }
 
@@ -62,13 +62,13 @@ void loop() {
     } else if (val == 'd') {
       posX += 1;
     } else if (val == 'w') {
-      posZ += 1;
-    } else if (val == 's') {
-      posZ -= 1;
-    } else if (val == 'i') {
       posY += 1;
-    } else if (val == 'k') {
+    } else if (val == 's') {
       posY -= 1;
+    } else if (val == 'i') {
+      posZ += 1;
+    } else if (val == 'k') {
+      posZ -= 1;
     } else if (val == 'j') {
       claw.write(180);
     } else if (val == 'l') {
