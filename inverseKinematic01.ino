@@ -36,7 +36,7 @@ void pos(float posX, float posY, float posZ) {
 
   // Creation of general units such as directional distances as well as angles
   float dist = sqrt(pow(posX, 2) + pow(posZ, 2) + pow(posY, 2));
-  float distXZ = sqrt(pow(posX, 2) + pow(posY, 2));
+  float distXY = sqrt(pow(posX, 2) + pow(posY, 2));
   float orthRad = atan(distXY / posZ);
   float orthDist = sqrt(pow(8, 2) - pow(dist / 2, 2));
 
